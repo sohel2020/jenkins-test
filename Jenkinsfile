@@ -1,10 +1,17 @@
+
+def isMaster = env.BRANCH_NAME == 'master'
+def isDevelop = env.BRANCH_NAME == 'staging'
+GITSHA = sh(returnStdout: true, script: 'git rev-parse --short HEAD')
+
 pipeline {
+  agent any
   environment {
     registry = "sohel2020/jenkins-test"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
-  agent any
+
+if (isDevelop || isMaster) {
   stages {
     stage('Cloning Git') {
       steps {
@@ -14,7 +21,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build("${registry}:${env.BRANCH_NAME}-${GITSHA}")
         }
       }
     }
@@ -29,8 +36,9 @@ pipeline {
     }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:$BRANCH_NAME-$GITSHA"
       }
+    }
     }
   }
 }
