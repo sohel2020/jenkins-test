@@ -11,7 +11,6 @@ pipeline {
     dockerImage = ''
   }
 
-if (isDevelop || isMaster) {
   stages {
     stage('Cloning Git') {
       steps {
@@ -40,5 +39,4 @@ if (isDevelop || isMaster) {
       }
     }
     }
-  }
 }
