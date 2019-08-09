@@ -11,7 +11,7 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
   node ('jenkins-pipeline') {
-      scm checkout
+ //     scm checkout
   stage ('helm') {
       container('helm') {
         sh 'helm version -c'
