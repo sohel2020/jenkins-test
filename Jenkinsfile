@@ -11,15 +11,15 @@ volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
   node ('jenkins-pipeline') {
-    stage ('helm') {
-      container('helm') {
-        sh "helm version"
-      }
-  }
   stage ('git clone') {
     container('jnlp') {
       scm checkout
     }
+  }
+  stage ('helm') {
+      container('helm') {
+        sh "helm version -c"
+      }
   }
   stage ('docker build') {
     container('docker') {
