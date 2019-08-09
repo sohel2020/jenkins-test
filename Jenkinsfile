@@ -12,11 +12,11 @@ volumes:[
 ]){
   node ('jenkins-pipeline') {
  //     scm checkout
-  stage ('helm') {
-      container('helm') {
-        sh 'helm version -c'
-      }
-  }
+//  stage ('helm') {
+//      container('helm') {
+//        sh 'helm version -c'
+//      }
+//  }
   stage ('docker build') {
     container('docker') {
       sh 'docker info'
